@@ -1,0 +1,3 @@
+model_checkpoint_path: "test_model_gender.ckpt"
+all_model_checkpoint_paths: "test_model.ckpt"
+all_model_checkpoint_paths: "test_model_gender.ckpt"
