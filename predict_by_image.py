@@ -13,6 +13,7 @@ import os
 import numpy as np
 import cv2
 import tensorflow as tf
+current_dir=os.getcwd()+'/'
 
 import imutils
 from imutils.face_utils import FaceAligner
@@ -24,9 +25,9 @@ def gender_predictor(image):
     pos_db=['0','1']
     alpha=['male','female']
     face_detector = dlib.get_frontal_face_detector()
-    predictor_model="/Users/avisheksarkar/Downloads/shape_predictor_68_face_landmarks.dat"
+    predictor_model=current_dir+ "shape_predictor_68_face_landmarks.dat"
     predictor = dlib.shape_predictor(predictor_model)
-    facerec=dlib.face_recognition_model_v1('/Users/avisheksarkar/Downloads/dlib_face_recognition_resnet_model_v1.dat')
+    facerec=dlib.face_recognition_model_v1(current_dir+'dlib_face_recognition_resnet_model_v1.dat')
     #fa=FaceAligner(predictor, desiredFaceWidth=256)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     detected_faces = face_detector(gray, 1)
