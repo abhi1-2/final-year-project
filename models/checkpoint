@@ -1,2 +1,2 @@
-model_checkpoint_path: "test_model2_gender.ckpt"
-all_model_checkpoint_paths: "test_model2_gender.ckpt"
+model_checkpoint_path: "test_model3_gender.ckpt"
+all_model_checkpoint_paths: "test_model3_gender.ckpt"

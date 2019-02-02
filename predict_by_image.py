@@ -38,10 +38,10 @@ def gender_predictor(image):
                 face_descriptor = facerec.compute_face_descriptor(img,shape)
                 face_descriptor=np.array(face_descriptor)
                 face_descriptor=face_descriptor.reshape((-1,1*128)).astype(np.float32)
-                saver = tf.train.import_meta_graph('models/test_model2_gender.ckpt.meta')
+                saver = tf.train.import_meta_graph('models/test_model3_gender.ckpt.meta')
                 graph = tf.get_default_graph()   
                 with tf.Session(graph=graph) as session:
-                    saver.restore(session,'models/test_model2_gender.ckpt')
+                    saver.restore(session,'models/test_model3_gender.ckpt')
                     weights_l1=tf.trainable_variables()[0]
                     biases_l1=tf.trainable_variables()[1]
                     weights_l2=tf.trainable_variables()[2]
