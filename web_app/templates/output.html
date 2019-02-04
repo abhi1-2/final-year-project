@@ -4,6 +4,25 @@
 	<title></title>
 </head>
 <body>
-gender of detected person is :{{session['gender']}}
+{% if gender==0 or age==0 %}
+<div>Please wait ...............
+<script type="text/javascript">
+	location.reload();
+</script>
+
+</div>
+{%endif%}
+gender of detected person is :{{gender}}
+<br>
+age group of detected person is :{{age}}
+
+
+{% if gender=='male' %}
+<div>it is a male</div>
+{% elif gender=='female' %}
+<div>it is a female</div>
+{% else %}
+<div>person not found</div>
+{% endif %}
 </body>
 </html>
