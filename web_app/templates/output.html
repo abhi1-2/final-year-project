@@ -3,26 +3,82 @@
 <head>
 	<title></title>
 </head>
+<style type="text/css">
+	.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+</style>
+
+
 <body>
 {% if gender==0 or age==0 %}
 <div>Please wait ...............
 <script type="text/javascript">
 	location.reload();
+
 </script>
 
 </div>
 {%endif%}
 gender of detected person is :{{gender}}
+<script type="text/javascript">
+var xhttp = new XMLHttpRequest();
+
+ var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            
+        	//console.log(xmlHttp);   
+        	var myObj = JSON.parse(xmlHttp.responseText); 
+        	console.log(myObj);   
+        	myObj.forEach(function(product){
+
+		var container = document.getElementById("container");
+		   container.innerHTML += '<div class="card"><img src='+product.img_url+' alt="'+product.name+'" \style="width:100%"/><h1>'+product.name+'</h1>\
+  				<p class="price">Rs '+product.price+'</p>\
+  			<p>'+product.description+'</p>\
+ <p><button>Add to Cart</button></p>\
+		</div>';
+
+		
+
+
+        	}) 	;
+        	
+
+    }
+    xmlHttp.open("GET", "http://localhost:8083/data/{{age}}/{{gender}}", true); // true for asynchronous 
+    xmlHttp.send(null);
+</script>
 <br>
 age group of detected person is :{{age}}
 
-
-{% if gender=='male' %}
-<div>it is a male</div>
-{% elif gender=='female' %}
-<div>it is a female</div>
-{% else %}
-<div>person not found</div>
-{% endif %}
+<center><h1>Products For You:</h></center>
+<div id='container'></div>
 </body>
 </html>

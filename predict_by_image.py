@@ -75,13 +75,7 @@ def gender_predictor(image):
     else:
         return 0
 def age_predictor( path):
-    alpha=['baby','teen','young','mid-age','old','very old']
-    
-    
-    #print("Loaded model from disk")
-
-
-
+    alpha=['1-10','11-20','21-30','31-40','41-50','51-above']
 
     image=path
     image=cv2.imread(image)
@@ -106,74 +100,19 @@ def age_predictor( path):
         return 0                
 
 # In[24]:
-def gender_predictor_keras(img_path):
-    dwnld_link = "https://s3.ap-south-1.amazonaws.com/arunponnusamy/pre-trained-weights/gender_detection.model"
-    model_path = get_file("gender_detection.model", dwnld_link,
-                         cache_subdir="pre-trained", cache_dir=os.getcwd())
-                         
-    # load model
-    #model = load_model(model_path)
-
-    # read input image
-    #img_path=os.getcwd()+'/t.jpg'
-    image = cv2.imread(img_path)
-
-
-
-    # load pre-trained model
-
-
-    if image is None:
-        print("Could not read input image")
-        exit()
-
-    # load pre-trained model
-
-
-    # detect faces in the image
-    face, confidence = cv.detect_face(image)
-
-    classes = ['man','woman']
-
-    # loop through detected faces
-    for idx, f in enumerate(face):
-
-         # get corner points of face rectangle       
-        (startX, startY) = f[0], f[1]
-        (endX, endY) = f[2], f[3]
-
-        # draw rectangle over face
-        #cv2.rectangle(image, (startX,startY), (endX,endY), (0,255,0), 2)
-
-        # crop the detected face region
-        face_crop = np.copy(image[startY:endY,startX:endX])
-
-        # preprocessing for gender detection model
-        try:
-            face_crop = cv2.resize(face_crop, (96,96))
-        except:
-            pass
-        face_crop = face_crop.astype("float") / 255.0
-        face_crop = img_to_array(face_crop)
-        face_crop = np.expand_dims(face_crop, axis=0)
-
-        # apply gender detection on face
-        with tf.Graph().as_default():
-            with tf.Session() as sess:
-                k.set_session(sess)
-                model = load_model(model_path)
-                conf = model.predict(face_crop)[0]
-                return classes[conf.argmax()]
-
 
 
 
 def ethinicity_predictor():
+
     return 0
 
 # In[ ]:
+def beard_predictor():
+    return 0
 
-
+def spectacles_predictor():
+    return 0    
 
 
 # In[ ]:
