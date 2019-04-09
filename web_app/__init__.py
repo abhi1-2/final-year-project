@@ -1,5 +1,6 @@
 from flask import Flask ,render_template,request,url_for,Response,redirect,session,jsonify
 from predict_by_image import gender_predictor,age_predictor
+from predict_by_image import spectacles_predictor
 import base64
 import os
 import cv2
@@ -7,14 +8,17 @@ import dlib
 import json
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_migrate import Migrate
 	
 face_detector = dlib.get_frontal_face_detector()
 vc=cv2.VideoCapture(0)
 current_dir=os.getcwd()
 app=Flask(__name__,static_url_path = "/test_images", static_folder = "test_images")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test_new.db'
 db=SQLAlchemy(app)
+migrate = Migrate(app, db)
 CORS(app,resources=r"/data/*")
+
 
 from web_app import models
 
@@ -24,6 +28,8 @@ from web_app import models
 def get_all_data_(age,gender):
 	from web_app.models import Products
 	pro=Products().query.filter_by(age_group=age,gender=gender).all()
+
+	
 	items=[]
 	for item in pro:
 		item_dict={
@@ -35,7 +41,20 @@ def get_all_data_(age,gender):
 		'gender':gender,
 
 		}
+		#print(items)
 		items.append(item_dict)
+	item=Products().query.filter_by(glasses=True).first()
+	item_dict={
+		'img_url':item.picture_url,
+		'name':item.name,
+		'price':item.price,
+		'description':item.description,
+		'age':age,
+		'gender':gender,
+
+		}
+	items.append(item_dict)	
+	print(items)
 	return Response(json.dumps(items),  mimetype='application/javascript')
 
 
@@ -84,7 +103,9 @@ def predict():
 	
 	age=age_predictor(image)
 	print(age)
-	return render_template('output.html',gender=gender,age=age)
+	glasses=spectacles_predictor(image)
+	print(glasses)
+	return render_template('output.html',gender=gender,age=age,glasses=glasses,ethnicity="Asian")
 def gen():
     """Video streaming generator function."""
     while True:

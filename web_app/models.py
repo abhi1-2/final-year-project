@@ -9,6 +9,8 @@ class Products(db.Model):
 	age_group=db.Column(db.String(20),nullable=False)
 	gender=db.Column(db.String(20),nullable=False)
 	ethinicity=db.Column(db.String(20),nullable=False,default='asian')
+	glasses=db.Column(db.Boolean(),default=False)
+	beard=db.Column(db.Boolean(),default=False)
 	
 
 	def __repr__(self):

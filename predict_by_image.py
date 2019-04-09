@@ -23,6 +23,7 @@ import imutils
 from imutils.face_utils import FaceAligner
 from imutils.face_utils import rect_to_bb
 from imutils import face_utils
+from get_glasses import find_specs
 face_detector = dlib.get_frontal_face_detector()
 predictor_model=current_dir+ "shape_predictor_68_face_landmarks.dat"
 predictor = dlib.shape_predictor(predictor_model)
@@ -111,8 +112,9 @@ def ethinicity_predictor():
 def beard_predictor():
     return 0
 
-def spectacles_predictor():
-    return 0    
+def spectacles_predictor(image):
+    glasses=find_specs(image)
+    return glasses.isSpecs    
 
 
 # In[ ]:
